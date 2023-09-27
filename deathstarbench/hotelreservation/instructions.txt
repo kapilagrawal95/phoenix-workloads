@@ -1,0 +1,6 @@
+Some commands to test:
+
+curl "http://192.168.215.71:5000/hotels?inDate=2015-04-09&outDate=2015-04-11&lat=38.0235&lon=-122.095"
+curl "http://<Service-IP>:5000/recommendations?require=rate&lat=38.0235&lon=-122.095"
+
+Debug with kubectl logs
