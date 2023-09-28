@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: track-changes
+  name: track-changes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: track-changes
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/default: "true"
+        io.kompose.service: track-changes
+    spec:
+      containers:
+        - image: gtato/sharelatex-track-changes
+          name: track-changes
+          ports:
+            - containerPort: 3015
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/mongodb
+              name: track-changes-claim0
+      restartPolicy: Always
+      volumes:
+        - name: track-changes-claim0
+          persistentVolumeClaim:
+            claimName: track-changes-claim0
+status: {}
+

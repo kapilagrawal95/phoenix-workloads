@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: docstore
+  name: docstore
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: docstore
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.network: "true"
+        io.kompose.service: docstore
+    spec:
+      containers:
+        - image: gtato/sharelatex-docstore
+          name: docstore
+          ports:
+            - containerPort: 3016
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/mongodb
+              name: docstore-claim0
+      restartPolicy: Always
+      volumes:
+        - name: docstore-claim0
+          persistentVolumeClaim:
+            claimName: docstore-claim0
+status: {}
+
