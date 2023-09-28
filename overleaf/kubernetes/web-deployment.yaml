@@ -34,7 +34,7 @@ spec:
             - name: SHARELATEX_CONFIG
               value: /etc/sharelatex/settings.coffee
             - name: SHARELATEX_REAL_TIME_URL
-              value: http://real-time:3026
+              value: http://155.98.38.125:30911
             - name: SHARELATEX_REDIS_HOST
               value: redis
             - name: SHARELATEX_SESSION_SECRET

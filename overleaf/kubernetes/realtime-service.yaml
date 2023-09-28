@@ -9,9 +9,11 @@ metadata:
     io.kompose.service: real-time
   name: real-time
 spec:
+  type: NodePort
   ports:
     - name: "3026"
       port: 3026
+      nodePort: 30911
       targetPort: 3026
   selector:
     io.kompose.service: real-time
