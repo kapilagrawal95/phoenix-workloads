@@ -1,7 +1,7 @@
 import subprocess
 import re
 import requests
-
+import time
 
 def find_link_in_output(output):
     # check is done without errors
@@ -27,63 +27,64 @@ def find_csrf_passwordReset_tokens(response):
 def get_user_credentials(i):
     return ("user{}@netsail.uci.edu".format(str(i)), "iamuser{}".format(str(i)))
 
+for i in range(0, 1):
+    username, password = get_user_credentials(4)
 
-username, password = get_user_credentials(4)
+    print("Trying to add new user with credentials username: {} and password: {}".format(username, password))
 
-print("Trying to add new user with credentials username: {} and password: {}".format(username, password))
+    # If running docker container uncomment this and comment kubernetes
+    # command = "docker exec -it sharelatex-dockerized_web_1 grunt user:create-admin --email {}".format(username)
+    # output = subprocess.check_output(command, shell=True, text=True)
 
-# If running docker container uncomment this and comment kubernetes
-# command = "docker exec -it sharelatex-dockerized_web_1 grunt user:create-admin --email {}".format(username)
-# output = subprocess.check_output(command, shell=True, text=True)
+    # if running kubernetes then first get the pod
+    pod_command = "kubectl get pods | grep '^web' | awk '{print $1}'"
+    output = subprocess.check_output(pod_command, shell=True)
+    pod_name = output.decode("utf-8").strip()
+    command = "kubectl exec -it "+pod_name+" -- grunt user:create-admin --email {}".format(username)
+    output = subprocess.check_output(command, shell=True)
 
-# if running kubernetes then first get the pod
-pod_command = "kubectl get pods | grep '^web' | awk '{print $1}'"
-output = subprocess.check_output(pod_command, shell=True)
-pod_name = output.decode("utf-8").strip()
-command = "kubectl exec -it "+pod_name+" -- grunt user:create-admin --email {}".format(username)
-output = subprocess.check_output(command, shell=True)
+    output_str = output.decode("utf-8")
 
-output_str = output.decode("utf-8")
+    # # Run the command and capture the output
+    # # Print or store the output
+    print("Successfully, created new username...")
+    print("Now adding password..")
 
-# # Run the command and capture the output
-# # Print or store the output
-print("Successfully, created new username...")
-print("Now adding password..")
-
-url = find_link_in_output(output_str)
+    url = find_link_in_output(output_str)
 
 
-# if running kubernetes replace localhost:8080 with the IP and 30910
-ip_command = "hostname -I | awk '{print $1}'"
-output = subprocess.check_output(ip_command, shell=True)
-IP = output.decode("utf-8").strip()
-url = url.replace("localhost:8080", IP+":30910")
-print(url)
-resetToken = url.split("Token=")[-1].strip()
-print(resetToken)
-#Else do nothing and go below
+    # if running kubernetes replace localhost:8080 with the IP and 30910
+    ip_command = "hostname -I | awk '{print $1}'"
+    output = subprocess.check_output(ip_command, shell=True)
+    IP = output.decode("utf-8").strip()
+    url = url.replace("localhost:8080", IP+":30910")
+    print(url)
+    resetToken = url.split("Token=")[-1].strip()
+    print(resetToken)
+    #Else do nothing and go below
 
-print(url)
+    print(url)
 
-session = requests.Session()  # Create a session to persist cookies
-response = session.get(url)
-#print(str(response.content))
-csrf, reset = find_csrf_passwordReset_tokens(str(response.content))
+    session = requests.Session()  # Create a session to persist cookies
+    response = session.get(url)
+    #print(str(response.content))
+    csrf, reset = find_csrf_passwordReset_tokens(str(response.content))
 
-data = {"_csrf":csrf,"password":password,"passwordResetToken":resetToken}
-post_url = "http://localhost:8080/user/password/set"
-print(data)
-# if running on kubernetes, then replace localhost:8080
-post_url = post_url.replace("localhost:8080", IP+":30910")
-# if running docker then comment above
+    data = {"_csrf":csrf,"password":password,"passwordResetToken":resetToken}
+    post_url = "http://localhost:8080/user/password/set"
+    print(data)
+    # if running on kubernetes, then replace localhost:8080
+    post_url = post_url.replace("localhost:8080", IP+":30910")
+    # if running docker then comment above
 
-print(post_url)
-response = session.post(post_url, data=data)
-print(response)
+    print(post_url)
+    response = session.post(post_url, data=data)
+    print(response)
 
-if "200" not in str(response):
-    raise Exception("some issue with setting {}'s password".format(username))
-else:
-    print("Successfully, added password for {}...".format(username))
+    if "200" not in str(response):
+        raise Exception("some issue with setting {}'s password".format(username))
+    else:
+        print("Successfully, added password for {}...".format(username))
 
-session.close()
+    session.close()
+    time.sleep(5)
