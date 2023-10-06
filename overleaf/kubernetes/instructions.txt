@@ -7,3 +7,5 @@ Stackoverflow Link:https://stackoverflow.com/questions/64489979/websocket-connec
 Also when a new IP is generated that IP should be replaced in line 37 in web-deployment.
 Rest is ok.
 
+Sometimes there is a websocket error when trying to go into the file:. The reason is that the entire deployment was deleted, i.e., had to remove everything (except persistent volumes).
+If such a case occurs, reprovision another Cloudlab Cluster and start over.
