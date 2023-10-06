@@ -27,8 +27,8 @@ def find_csrf_passwordReset_tokens(response):
 def get_user_credentials(i):
     return ("user{}@netsail.uci.edu".format(str(i)), "iamuser{}".format(str(i)))
 
-for i in range(0, 1):
-    username, password = get_user_credentials(4)
+for i in range(1, 11):
+    username, password = get_user_credentials(i)
 
     print("Trying to add new user with credentials username: {} and password: {}".format(username, password))
 

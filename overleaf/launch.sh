@@ -23,7 +23,6 @@ sleep 10
 kubectl apply -f contacts-pv.yaml
 kubectl apply -f contacts-deployment.yaml
 kubectl apply -f contacts-service.yaml
-kubectl apply -f clsi-pv.yaml
 kubectl apply -f clsi-deployment.yaml
 kubectl apply -f clsi-service.yaml
 kubectl apply -f document-updater-deployment.yaml
@@ -41,7 +40,10 @@ sleep 10
 IP=$(hostname -I | awk '{print $1}')
 SHARELATEX_REAL_TIME_URL_VALUE=$IP":30911" 
 envsubst < "web-deployment.yaml" | kubectl apply -f -
+kubectl apply -f web-service.yaml
+
 sleep 10
 
-
+echo "First check web logs and see if the server is listening"
 echo "Access overleaf at:"$IP":30910 ! wait but first create users from create_users script by logging into the master node!"
+echo "perform a get to "$IP":30911 this should say Cannot GET"
