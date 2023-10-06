@@ -13,7 +13,7 @@ spec:
   ports:
     - name: "5000"
       port: 5000
-      nodePort: 30910
+      nodePort: 30915
       targetPort: 5000
   selector:
     io.kompose.service: frontend
