@@ -9,3 +9,6 @@ Rest is ok.
 
 Sometimes there is a websocket error when trying to go into the file:. The reason is that the entire deployment was deleted, i.e., had to remove everything (except persistent volumes).
 If such a case occurs, reprovision another Cloudlab Cluster and start over.
+
+A critical thing to note is when passing the URL to web-deployment.yaml REAL_TIME_URL should be set properly. https://<ip>:30911 
+this should be exact.
