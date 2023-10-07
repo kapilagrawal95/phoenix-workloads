@@ -9,7 +9,9 @@ password: iamuser1
 replace 1 with i from {1, 100}
 
 # hotelReservation
-TBD
+cd deathstarbench/hotelReservation
+bash launch.sh 
+this script creates a namespace hotelReservation, adds istio label, and deploys all the pods and services.
 
 # Spark
 Coming soon
