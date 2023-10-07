@@ -1,6 +1,7 @@
 #!/bin/bash
 
 kubectl create namespace overleaf
+kubectl label namespace overleaf istio-injection=enabled
 kubectl config set-context --current --namespace=overleaf
 cd kubernetes
 kubectl apply -f mongo-pv.yaml
