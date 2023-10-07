@@ -1,6 +1,6 @@
-kubectl create namespace hotelReservation
-kubectl label namespace hotelReservation istio-injection=enabled
+kubectl create namespace hotelreservation
+kubectl label namespace hotelreservation istio-injection=enabled
 
-kubectl config set-context --current --namespace=hotelReservation
+kubectl config set-context --current --namespace=hotelreservation
 cd kubernetes
 kubectl apply -Rf hotel-res-core/
