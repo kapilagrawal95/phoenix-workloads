@@ -1,5 +1,9 @@
+
 # Phoenix Workloads
 
+## On start
+Run the script setup.sh
+this will install istio with grafana, prometheus, kiali and expose them
 ## Overleaf
 follow instructions.txt in kubernetes. Soon to replace with launch.sh
 To create users, cd into overleaf and run the command: python3 create_users.py. This will create users of the following
