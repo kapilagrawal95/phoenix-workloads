@@ -39,7 +39,7 @@ kubectl apply -f track-changes-deployment.yaml
 kubectl apply -f track-changes-service.yaml
 sleep 10
 IP=$(hostname -I | awk '{print $1}')
-SHARELATEX_REAL_TIME_URL_VALUE=$IP":30911" 
+export SHARELATEX_REAL_TIME_URL_VALUE=$IP":30911" 
 envsubst < "web-deployment.yaml" | kubectl apply -f -
 kubectl apply -f web-service.yaml
 
