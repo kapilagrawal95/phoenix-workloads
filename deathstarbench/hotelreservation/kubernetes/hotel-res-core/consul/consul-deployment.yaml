@@ -37,8 +37,8 @@ spec:
               protocol: UDP
           resources:
             requests:
-              cpu: 5000m
+              cpu: 100m
             limits:
-              cpu: 5000m
+              cpu: 1000m
       restartPolicy: Always
 status: {}
