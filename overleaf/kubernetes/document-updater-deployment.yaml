@@ -29,7 +29,11 @@ spec:
           name: document-updater
           ports:
             - containerPort: 3003
-          resources: {}
+          resources:
+            requests:
+              cpu: 2500m
+            limits:
+              cpu: 2500m
       restartPolicy: Always
 status: {}
 

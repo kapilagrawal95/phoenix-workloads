@@ -30,7 +30,11 @@ spec:
           name: track-changes
           ports:
             - containerPort: 3015
-          resources: {}
+          resources:
+            requests:
+              cpu: 2500m
+            limits:
+              cpu: 2500m
           volumeMounts:
             - mountPath: /var/lib/mongodb
               name: track-changes-claim0

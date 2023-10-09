@@ -30,7 +30,11 @@ spec:
           name: filestore
           ports:
             - containerPort: 3009
-          resources: {}
+          resources:
+            requests:
+              cpu: 2500m
+            limits:
+              cpu: 2500m
           volumeMounts:
             - mountPath: /app/data
               name: filestore-claim0

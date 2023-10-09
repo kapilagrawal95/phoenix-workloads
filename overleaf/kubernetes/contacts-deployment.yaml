@@ -30,7 +30,11 @@ spec:
           name: contacts
           ports:
             - containerPort: 3036
-          resources: {}
+          resources:
+            requests:
+              cpu: 2500m
+            limits:
+              cpu: 2500m
           volumeMounts:
             - mountPath: /var/lib/mongodb
               name: contacts-claim0
