@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: chat-claim0
+  name: chat-claim0
+  # namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: chat-storage
+  resources:
+    requests:
+      storage: 100Mi
+status: {}

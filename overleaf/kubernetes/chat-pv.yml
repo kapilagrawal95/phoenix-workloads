@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: chat-pv
+spec:
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  storageClassName: chat-storage
+  hostPath:
+    path: /data/volumes/chat-pv   # Where all the hard drives are mounted
+    type: DirectoryOrCreate

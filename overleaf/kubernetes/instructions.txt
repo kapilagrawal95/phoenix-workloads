@@ -12,3 +12,8 @@ If such a case occurs, reprovision another Cloudlab Cluster and start over.
 
 A critical thing to note is when passing the URL to web-deployment.yaml REAL_TIME_URL should be set properly. https://<ip>:30911 
 this should be exact.
+
+Added chat too.
+Troubleshooting chat:
+1. check default:namespace is commented
+2. chat-pv must be created first and then pvc. After that run kubectl get pv to see if pvc and pv are connected.

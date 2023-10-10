@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.31.1 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: chat
+  name: chat
+  # namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: chat
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.31.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/sharelatex-dockerized-default: "true"
+        io.kompose.service: chat
+    spec:
+      containers:
+        - image: gtato/sharelatex-chat
+          name: chat
+          ports:
+            - containerPort: 3010
+              hostPort: 3010
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 2500m
+            limits:
+              cpu: 2500m
+          volumeMounts:
+            - mountPath: /var/lib/mongodb
+              name: chat-claim0
+      restartPolicy: Always
+      volumes:
+        - name: chat-claim0
+          persistentVolumeClaim:
+            claimName: chat-claim0
+status: {}
